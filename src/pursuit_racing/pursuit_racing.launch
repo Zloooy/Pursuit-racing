@@ -1,0 +1,24 @@
+<launch>
+    <arg name="follower_speed" default="1" doc="Speed of the follower turtle" />
+    <arg name="follower_reaction_frequency" default="1" doc="Frequency of " />
+    <node
+        name="turtle"
+        pkg="turtlesim"
+        type="turtlesim_node"
+        output="screen"
+    >
+        <remap from="/turtle1/pose" to="/turtle/pose" />
+        <remap from="/turtle1/color_sensor" to="/turtle/color_sensor" />
+    </node>
+    <node
+        pkg="turtlesim"
+        type="turtle_teleop_key"
+        name="turtle_teleop"
+    />
+    
+    <node pkg="pursuit_racing" type="pursuit_racing.py" name="pursuit_racing" output="screen">
+        <param name="speed" type="double" value="$(arg follower_speed)" />
+        <param name="reaction_frequency" type="double" value="$(arg follower_reaction_frequency)" />
+    </node>
+
+</launch>
